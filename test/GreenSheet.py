@@ -19,6 +19,31 @@ import matplotlib.pyplot as plt
 startUp
 if (os.path.isdir(startUp.saveDir) == False):
     os.mkdir(startUp.saveDir)
+    
+# %% Input Parameters #########################################################
+lamda = 532                                     # Wavelength [nm]
+w0 = 680                                        # Waist of incoming collimated beam [um]
+P = 350                                         # Total power in beam[mW]
+PP_offset = 0                                   # Vertical shift of the phase plate[mm]
+PP_tilt = 0                                     # Phase plate [degrees]
+f1 = 40                                         # Focal length of first lens [mm]
+f2 = 300                                         # Focal length of first lens [mm]
+f3 = 200                                         # Focal length of first lens [mm]
+# Array Parameters ############################################################
+Nx = 2**7
+Ny = 2**7
+Nz = 5
+
+# %% Derived Values ###########################################################
+k = 2*np.pi*10**(3)/lamda                       # wave number [um-1]
+zmin = -4*GB.RayleighLength(k,w0)
+zmax = 4*GB.RayleighLength(k,w0)
+x = np.linspace(-10*w0,10*w0,Nx)
+y = np.linspace(-10*w0,10*w0,Ny)
+z = np.linspace(zmin,zmax,Nz)
+[X,Y,Z] = np.meshgrid(x,y,z)
+R = np.sqrt(X**2+Y**2)
+THETA = np.arctan2(Y,X)
 
 # %% Common Functions ##############################################
 
@@ -40,7 +65,7 @@ def plotGaussianBeam(num,X,Y,I,I_fit,params,alpha_X,alpha_Y):
     gs=GridSpec(3,3)
     fig.clf()
     ax1=fig.add_subplot(gs[0:2,0:2]) 
-    c = ax1.pcolor(X[0,:]*10**-3, Y[:,0]*10**-3,I, cmap='Greens', vmin=0, vmax=np.max(I))
+    c = ax1.pcolor(X[0,:]*10**-3, Y[:,0]*10**-3,I, cmap='Blues', vmin=0, vmax=np.max(I))
     ax1.set_title('Total Power = {0} mW'.format(round(np.sum(I),2)))
     fig.colorbar(c, ax=ax1, label = 'Beam Intensity')
     ax1.axis([-alpha_X*1.5, alpha_X*1.5, -alpha_Y*1.5, alpha_Y*1.5])
@@ -68,7 +93,7 @@ def plotPhaseShiftedBeam(num,X,Y,I,E,alpha_X,alpha_Y):
     gs=GridSpec(2,2)
     fig.clf()
     ax=fig.add_subplot(gs[0,0]) 
-    c = ax.pcolor(X[0,:]*10**-3, Y[:,0]*10**-3,I, cmap='Greens', vmin=0, vmax=np.max(I))
+    c = ax.pcolor(X[0,:]*10**-3, Y[:,0]*10**-3,I, cmap='Blues', vmin=0, vmax=np.max(I))
     ax.set_title('Input Beam  Intensity\n Total Power = {0} mW'.format(round(np.sum(I),2)))
     ax.set_xlabel('X (mm)')
     ax.set_ylabel('Y (mm)')
@@ -82,7 +107,7 @@ def plotPhaseShiftedBeam(num,X,Y,I,E,alpha_X,alpha_Y):
     fig.colorbar(c, ax=ax, label = 'Phase')
     ax.axis([-alpha_X*1.5, alpha_X*1.5, -alpha_Y*1.5, alpha_Y*1.5])
     ax=fig.add_subplot(gs[1,0]) 
-    c = ax.pcolor(X[0,:]*10**-3, Y[:,0]*10**-3,I, cmap='Greens', vmin=0, vmax=np.max(I))
+    c = ax.pcolor(X[0,:]*10**-3, Y[:,0]*10**-3,I, cmap='Blues', vmin=0, vmax=np.max(I))
     ax.set_title('Output ($\pi$ plate) Beam  Intensity\n Total Power = {0} mW'.format(round(np.sum(I),2)))
     ax.set_xlabel('X (mm)')
     ax.set_ylabel('Y (mm)')
@@ -108,7 +133,7 @@ def plotGreenSheet(num,X,Y,I,f,alphax,alphay):
     gs=GridSpec(3,3)
     fig.clf()
     ax=fig.add_subplot(gs[0:2,0:2]) 
-    c = ax.pcolor(X[0,:], Y[:,0],I, cmap='Greens', vmin=0, vmax=np.max(I))
+    c = ax.pcolor(X[0,:], Y[:,0],I, cmap='Blues', vmin=0, vmax=np.max(I))
     ax.set_title('Beam at focus f3 = {0} mm \n Total Power = {1} mW'.format(f,round(np.sum(I),2)))
     fig.colorbar(c, ax=ax, label = 'Beam Intensity')
     ax.axis([-1.5*alphax, 1.5*alphax, -1.5*alphay, 1.5*alphay])
@@ -145,29 +170,6 @@ def CircularAperture(E,X,Y,r0,x0,y0):
     E[R>r0] = 0    
     return E
 
-
-# %% Input Parameters #########################################################
-lamda = 532                                     # Wavelength [nm]
-w0 = 680                                        # Waist of incoming collimated beam [um]
-P = 350                                         # Total power in beam[mW]
-PP_offset = 0                                   # Vertical shift of the phase plate[mm]
-PP_tilt = 0                                     # Phase plate [degrees]
-# Array Parameters ############################################################
-Nx = 2**7
-Ny = 2**7
-Nz = 5
-
-# %% Derived Values ###########################################################
-k = 2*np.pi*10**(3)/lamda                       # wave number [um-1]
-zmin = -4*GB.RayleighLength(k,w0)
-zmax = 4*GB.RayleighLength(k,w0)
-x = np.linspace(-10*w0,10*w0,Nx)
-y = np.linspace(-10*w0,10*w0,Ny)
-z = np.linspace(zmin,zmax,Nz)
-[X,Y,Z] = np.meshgrid(x,y,z)
-R = np.sqrt(X**2+Y**2)
-THETA = np.arctan2(Y,X)
-
 # %% Input Beam ###############################################################
 # Generating Data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 X1 = X[:,:,0]
@@ -187,7 +189,6 @@ figure.savefig('GS_inputBeam.png')
 os.chdir(cwd)
 
 # %% Cylindrical Lens f1 = -40 mm #############################################
-f1 = 40
 # Generating Data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [E2, X2, Y2] = OE.CylLensAction(E1,X1,Y1,k,f1,FocusingAxis = 'Y')
 I2 = GB.BeamInt(E2,P)
@@ -199,8 +200,7 @@ I2_fit = GB.GaussBeamFit((X2,Y2),*params2).reshape(Ny,Nx)
 plotGaussianBeam(2,X2,Y2,I2,I2_fit,params2,0.5,0.5)
 
 # %% Spherical lens f2 = +300 mm ##############################################
-# Generating Data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-f2 = 300                                    # focal length of second lens  [mm]
+# Generating Data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                             
 [E3, X3, Y3] = OE.SphLensAction(E2,X2,Y2,k,f2,FocussedAxis ='Y')
 I3 = GB.BeamInt(E3,P)
 # Generating Fits %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -230,7 +230,6 @@ os.chdir(cwd)
 
 # %% Final Lens f3 = 200 mm ###################################################
 # Generating Data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-f3 = 200                                    # focal length of second lens  [mm]
 [E5, X5, Y5] = OE.SphLensAction(E4,X4,Y4,k,f3,FocussedAxis ='XY')
 I5 = GB.BeamInt(E5,P)
 figure = plotGreenSheet(5,X5,Y5,I5,f3,0.5*10**3,2*10**1)
