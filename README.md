@@ -4,7 +4,7 @@ Design of a TEM011 shaped beam from a TEM00 mode
 ## Overview
 | Input Beam | Output Beam |
 | - | - |
-| <img src="/figures/GS_inputBeam.png" alt="Drawing" width="400"/> | <img src="/figures/GS_final.png" alt="Drawing" width="400"/> |
+| <img src="/images/GS_inputBeam.png" alt="Drawing" width="400"/> | <img src="/images/GS_final.png" alt="Drawing" width="400"/> |
 
 ## Contents
 This repo contains the source code, some use case examples and sample data to play with.
