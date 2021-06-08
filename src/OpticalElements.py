@@ -36,10 +36,11 @@ def SphLensAction(E,X,Y,k,f,**kwargs):
     elif FocAxis == 'Y':
         Transform = fourier.fftshift(Transform, axes = 1)
     elif FocAxis == 'NONE':
-        Transform = fourier.fftshift(Transform)       
+        Transform = fourier.fftshift(Transform) 
+        
     dx = X[0,1]-X[0,0]
     Xfrq = (2*np.pi*f/k)*fourier.fftshift(fourier.fftfreq(X.shape[1], d=dx))
-    dy = dx = Y[1,0]-Y[0,0]
+    dy = Y[1,0]-Y[0,0]
     Yfrq = (2*np.pi*f/k)*fourier.fftshift(fourier.fftfreq(Y.shape[0], d=dy))
     [X, Y] = np.meshgrid(Xfrq,Yfrq)
     return [Transform, X, Y]
@@ -57,21 +58,25 @@ def CylLensAction(E,X,Y,k,f,**kwargs):
         raise Exception('OpticalElements::CylLensAction::E,X and Y should have same dimensions.')
     for key, value in kwargs.items():
         if key == 'FocusingAxis': FocAxis = value
+        if key == 'FocusedAxis': FocusedAxis = value
+       
     f = f*10**3
     if FocAxis == 'X': 
         Transform = fourier.fft(E, axis = 1)
-        Transform = fourier.fftshift(Transform, axes = 1)
+        if FocusedAxis != 'X':
+            Transform = fourier.fftshift(Transform, axes = 1)
         dx = X[0,1]-X[0,0]
         Xfrq = (2*np.pi*f/k)*fourier.fftshift(fourier.fftfreq(X.shape[1], d=dx))
         Yfrq = Y[:,0]
     elif FocAxis == 'Y': 
         Transform = fourier.fft(E, axis = 0)
-        Transform = fourier.fftshift(Transform, axes = 0)
-        dy = dx = Y[1,0]-Y[0,0]
+        if FocusedAxis != 'Y':
+            Transform = fourier.fftshift(Transform, axes = 0)
+        dy = Y[1,0]-Y[0,0]
         Yfrq = (2*np.pi*f/k)*fourier.fftshift(fourier.fftfreq(Y.shape[0], d=dy))
         Xfrq = X[0,:]
     else: raise Exception('OpticalElements::CylLensAction::Focussing xxis needs to be specified.')
-    [X, Y] = np.meshgrid(Xfrq,Yfrq)
+    [X, Y] = np.meshgrid(Xfrq,Yfrq) 
     return [Transform, X, Y]
 
 def PiPlateAction(E,X,Y,y_offset,tilt):

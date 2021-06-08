@@ -134,7 +134,7 @@ def plotGreenSheet(num,X,Y,I,f,alphax,alphay):
     fig.clf()
     ax=fig.add_subplot(gs[0:2,0:2]) 
     c = ax.pcolor(X[0,:], Y[:,0],I, cmap='Blues', vmin=0, vmax=np.max(I))
-    ax.set_title('Beam at focus f3 = {0} mm \n Total Power = {1} mW'.format(f,round(np.sum(I),2)))
+    ax.set_title('Beam at focus $f_3$ = {0} mm \n Total Power = {1} mW'.format(f,round(np.sum(I),2)))
     fig.colorbar(c, ax=ax, label = 'Beam Intensity')
     ax.axis([-1.5*alphax, 1.5*alphax, -1.5*alphay, 1.5*alphay])
     ax=fig.add_subplot(gs[2,0:2])
