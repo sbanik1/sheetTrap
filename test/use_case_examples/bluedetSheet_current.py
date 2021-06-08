@@ -183,6 +183,11 @@ p0 = [np.max(I1),0,0,w0,w0]
 [params1,_] = optimize.curve_fit(GB.GaussBeamFit, [X1,Y1], I1.ravel(), p0=p0)
 I1_fit = GB.GaussBeamFit([X1,Y1],*params1).reshape(Ny,Nx)
 figure = plotGaussianBeam(1,X1,Y1,I1,I1_fit,params1,1,1)
+cwd = os.getcwd()
+os.chdir(startUp.saveDir)
+figure.set_size_inches(10, 7)
+figure.savefig('GS_inputBeam.png')
+os.chdir(cwd)
 
 # %% Cylindrical Lens f_cyY #############################################
 # Generating Data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
