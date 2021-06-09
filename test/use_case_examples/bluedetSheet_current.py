@@ -186,7 +186,7 @@ figure = plotGaussianBeam(1,X1,Y1,I1,I1_fit,params1,1,1)
 cwd = os.getcwd()
 os.chdir(startUp.saveDir)
 figure.set_size_inches(10, 7)
-figure.savefig('GS_inputBeam.png')
+figure.savefig('GS_inputBeam.pdf')
 os.chdir(cwd)
 
 # %% Cylindrical Lens f_cyY #############################################
@@ -227,7 +227,7 @@ figure = plotGreenSheet(5,X5,Y5,I5,f_sph2,0.5*10**3,2*10**1)
 cwd = os.getcwd()
 os.chdir(startUp.saveDir)
 figure.set_size_inches(10, 7)
-figure.savefig('GS_final.png')
+figure.savefig('GS_final.pdf')
 os.chdir(cwd)
 
 # %% Final Spherical lens f_sph WITHOUT phase plate  ########################################
