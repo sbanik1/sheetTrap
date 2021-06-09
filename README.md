@@ -1,11 +1,22 @@
 # sheetTrap
 Optical Scheme for creating a TEM011 shaped beam from a TEM00 mode
-<img src="/images/opticalScheme.png" alt="Drawing" width="600"/>
 
 ## Overview
-| Input Beam | Output Beam |
-| - | - |
-| <img src="/images/GS_inputBeam.png" alt="Drawing" width="400"/> | <img src="/images/GS_final.png" alt="Drawing" width="400"/> |
+<figure class="image">
+  <img src="/images/opticalScheme.png" alt="Drawing" width="600"/>
+  <figcaption>Fig: The above scheme results in a blue detuned Optical Dipole Trap for atomic confinement along the Y direction.</figcaption>
+</figure>
+
+For sodium atoms, 250 mW (P) of 532 nm light will result in a vertical (Y) trapping frequency <img src="https://render.githubusercontent.com/render/math?math=\omega_y = 2\pi"> 2.7 kHz.
+
+<div align="left">
+<img src="https://render.githubusercontent.com/render/math?math=\omega_y = \sqrt{\frac{8 P K}{\pi m w_y^3 w_x}}">
+</div>
+where K is a constant dependent on the frequency of the atomic transition and laser and the natural linewidth of the atomic transition.
+
+| No Offset | Offset = 3 mm | Offset = 5 mm |
+| - | - | - |
+| <img src="GS_output.png" alt="Drawing" style="width: 350px;"/> | <img src="GS_outputTilt3.png" alt="Drawing" style="width: 350px;"/> | <img src="GS_outputTilt5.png" alt="Drawing" style="width: 350px;"/> |
 
 ## Contents
 This repo contains the source code, some use case examples and sample data to play with.
