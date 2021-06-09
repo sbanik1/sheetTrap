@@ -1,5 +1,6 @@
 # sheetTrap
-Design of a TEM011 shaped beam from a TEM00 mode
+Optical Scheme for creating a TEM011 shaped beam from a TEM00 mode
+<img src="/images/opticalScheme.png" alt="Drawing" width="700"/>
 
 ## Overview
 | Input Beam | Output Beam |
