@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+This code evaluates the Trap Frequency of Optical Dipole Traps 
+Created on Wed Jun 9 2021
+@author: Swarnav Banik
+sbanik1@umd.edu
+"""
+from __future__ import division
+import startUp
+import sys
+import numpy as np
+import os as os
+
+# %% Add path and initialize ##################################################
+startUp
+if (os.path.isdir(startUp.saveDir) == False):
+    os.mkdir(startUp.saveDir)
+    
+# %% Input Parameters #########################################################
+lamda_laser = 532                               # Wavelength of ODT laser [nm]
+lamda_trans = 589                               # Wavelength of atomic transition [nm] 
+c = 299792458                                   # Speed of light [m/s]
+mNa = 22.98*1.66e-27                            # Mass of sodium atom
+P = 250                                         # Power of beam [mW]
+Gamma = 2*np.pi*9.79*1e6                        # Line width [ 2 pi Hz]
+waistY_ODT = 6.6                                # Waist of ODT along Z [um]
+waistX_ODT = 453                                # Waist of ODT along X [um]
+
+# %% Estimate Trap frequency ##################################################
+
+Imax = 2*P*10**9/(np.pi*waistY_ODT*waistX_ODT)      # Intensity [W/m^2]
+omega_trans = 2*np.pi*c*1e9/lamda_trans             # omega for trans [2 pi Hz]
+omega_laser = 2*np.pi*c*1e9/lamda_laser             # omega for trans [2 pi Hz]
+K = 3*np.pi*c**2/2/(omega_trans)**3*(Gamma/(omega_trans-omega_laser) +\
+                                     Gamma/(omega_trans+omega_laser))
+trapFrqVal = np.sqrt(4*Imax*abs(K)/(mNa*(waistY_ODT*1e-6)**2))/2/np.pi
+
+sys.stdout.write("Vertical Trap Frequency = 2 pi %d Hz" % trapFrqVal)
+
+

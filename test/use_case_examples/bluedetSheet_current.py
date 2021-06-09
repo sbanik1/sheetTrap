@@ -23,8 +23,8 @@ if (os.path.isdir(startUp.saveDir) == False):
 # %% Input Parameters #########################################################
 lamda = 532                                     # Wavelength [nm]
 w0 = 680                                        # Waist of incoming collimated beam [um]
-P = 350                                         # Total power in beam[mW]
-PP_offset = 0                                   # Vertical shift of the phase plate[mm]
+P = 250                                         # Total power in beam[mW]
+PP_offset = 5                                   # Vertical shift of the phase plate[mm]
 PP_tilt = 0                                     # Phase plate [degrees]
 # focal lengths of all Lenses #########################################
 f_cyY = 40                                      # Focal length of first lens [mm]
@@ -227,7 +227,7 @@ figure = plotGreenSheet(5,X5,Y5,I5,f_sph2,0.5*10**3,2*10**1)
 cwd = os.getcwd()
 os.chdir(startUp.saveDir)
 figure.set_size_inches(10, 7)
-figure.savefig('GS_final.pdf')
+figure.savefig('GS_final.png')
 os.chdir(cwd)
 
 # %% Final Spherical lens f_sph WITHOUT phase plate  ########################################
