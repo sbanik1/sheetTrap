@@ -12,7 +12,7 @@ For sodium atoms, 250 mW (P) of 532 nm light will result in a vertical (Y) trapp
 <div align="left">
 <img src="https://render.githubusercontent.com/render/math?math=\omega_y = \sqrt{\frac{8 P K}{\pi m w_y^3 w_x}}">
 </div>
-where K is a constant dependent on the frequency of the atomic transition and laser and the natural linewidth of the atomic transition.
+where m is the mass of the atom, w_x and w_y are the waist of the beam along X and Y respectively, and K is a constant whose value depends on the frequency of the atomic transition and laser and the natural linewidth of the atomic transition.
 
 ### Effect of misaligning the phase plate
 | No misalignment | Misaligned by 3 mm in Y | Misaligned by 5 mm in Y |
