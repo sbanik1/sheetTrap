@@ -14,9 +14,10 @@ For sodium atoms, 250 mW (P) of 532 nm light will result in a vertical (Y) trapp
 </div>
 where K is a constant dependent on the frequency of the atomic transition and laser and the natural linewidth of the atomic transition.
 
-| No Offset | Offset = 3 mm | Offset = 5 mm |
+### Effect of misaligning the phase plate
+| No misalignment | Misaligned by 3 mm in Y | Misaligned by 5 mm in Y |
 | - | - | - |
-| <img src="GS_output.png" alt="Drawing" style="width: 350px;"/> | <img src="GS_outputTilt3.png" alt="Drawing" style="width: 350px;"/> | <img src="GS_outputTilt5.png" alt="Drawing" style="width: 350px;"/> |
+| <img src="/images/GS_output.png" alt="Drawing" style="width: 350px;"/> | <img src="/images/GS_outputTilt3.png" alt="Drawing" style="width: 350px;"/> | <img src="/images/GS_outputTilt5.png" alt="Drawing" style="width: 350px;"/> |
 
 ## Contents
 This repo contains the source code, some use case examples and sample data to play with.
